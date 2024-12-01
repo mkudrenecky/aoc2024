@@ -14,4 +14,16 @@ def get_lists_from_file(file_path)
   file.close
   [list1, list2]
 end
-  
+
+def similarity_score(list1, list2)
+  similarity_scores = Array.new(list1.length, 0)
+  list1.each_with_index do |x, index| 
+    list2.each do |y|
+      similarity_scores[index] += 1 if x == y 
+    end
+  end
+ scores = similarity_scores.each_with_index.map { |x, index| x*list1[index].to_i }
+ similarity_score = scores.reduce { |sum, score| sum + score }
+ puts similarity_score
+end
+
