@@ -27,12 +27,22 @@ def modest_increment?(arr)
   return true
 end
 
-def safe?(list)
-  count = 0 
+def is_safe(list)
+  safe_list = Array.new
   list.each do |arr|
     if sorted?(arr) && unique?(arr) && modest_increment?(arr)
-     count += 1
+      safe_list.push(arr)
+    else
+      arr.each_with_index do |x, index|
+        arr.delete_at(index)
+        if sorted?(arr) && unique?(arr) && modest_increment?(arr)
+          arr.insert(index,x)
+          safe_list.push(arr)
+        else
+          arr.insert(index,x)
+        end
+      end
     end
   end
-   count
+  safe_list.uniq.count
 end
